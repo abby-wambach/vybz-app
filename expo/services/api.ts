@@ -85,6 +85,16 @@ export async function logout() {
   await clearTokens();
 }
 
+// ── Profile ───────────────────────────────────────────────────────────────────
+
+export async function getProfile() {
+  return request<UserProfile>("/profile");
+}
+
+export async function getCollection() {
+  return request<{ collected_songs: CollectedSong[]; total_songs: number }>("/collection");
+}
+
 // ── Drops ─────────────────────────────────────────────────────────────────────
 
 export async function getNearbyDrops(lat: number, lon: number, radiusMeters = 500) {
@@ -98,6 +108,36 @@ export async function collectDrop(dropId: number) {
 }
 
 // ── Types ─────────────────────────────────────────────────────────────────────
+
+export interface UserProfile {
+  username: string;
+  avatar: string | null;
+  bio: string | null;
+  mbti: string | null;
+  zodiac: string | null;
+  xp: number;
+  coins: number;
+  level: number;
+  next_level_xp: number | null;
+  level_progress_percentage: number | null;
+}
+
+export interface CollectedSong {
+  id: number;
+  song_id: number;
+  title: string;
+  artist: string;
+  album: string | null;
+  genre: string;
+  display_genre: string;
+  rarity: string;
+  rarity_name: string;
+  image_url: string | null;
+  preview_url: string | null;
+  spotify_id: string | null;
+  apple_music_id: string | null;
+  collected_at: string;
+}
 
 export interface Drop {
   id: number;
